@@ -2,15 +2,26 @@
 
 import { useState, useEffect } from "react";
 import { linkIcon, copy, logo, tick } from "../assets/index.js";
+import { useLazyGetSummaryQuery } from "../services/article.js";
 
 const Demo = () => {
   const [article, setArticle] = useState({
     url: "",
     summary: "",
   });
+  const [getSummary, { error, isFetching }] = useLazyGetSummaryQuery();
+
   const handleSubmit = async (e) => {
-    alert("Submitted");
+    e.preventDefault();
+    const { data } = await getSummary({ articleUrl: article.url });
+
+    if (data?.summary) {
+      const newArticle = { ...article, summary: data.summary };
+      setArticle(newArticle);
+      console.log(newArticle);
+    }
   };
+
   return (
     <section className="mt-16 w-full max-w-xl">
       <div className="flex flex-col w-full gap-2">
