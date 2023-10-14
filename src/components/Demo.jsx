@@ -1,7 +1,7 @@
 //import React from "react";
 
 import { useState, useEffect } from "react";
-import { linkIcon, copy, logo, tick } from "../assets/index.js";
+import { linkIcon, copy, tick, loader } from "../assets/index.js";
 import { useLazyGetSummaryQuery } from "../services/article.js";
 
 const Demo = () => {
@@ -10,6 +10,7 @@ const Demo = () => {
     summary: "",
   });
   const [allArticles, setAllArticles] = useState([]);
+  //const [copied, setCopied] = useState("");
   const [getSummary, { error, isFetching }] = useLazyGetSummaryQuery();
 
   useEffect(() => {
@@ -35,6 +36,11 @@ const Demo = () => {
       console.log(newArticle);
     }
   };
+  // const handleCopy = (copyUrl) => {
+  //   setCopied(copyUrl);
+  //   navigator.clipboard.writeText(copyUrl);
+  //   //setTimeout(() => setCopied(false), 3000);
+  // };
 
   return (
     <section className="mt-16 w-full max-w-xl">
@@ -79,7 +85,7 @@ const Demo = () => {
               <div className="copy_btn">
                 <img
                   src={copy}
-                  alt="cpoy_icon"
+                  alt="copy_icon"
                   className="w-[40%] h-[40%] object-contain"
                 />
               </div>
@@ -108,6 +114,11 @@ const Demo = () => {
               <h2 className="font-satoshi font-bold text-gray-600 text-xl">
                 Article<span className="blue_gradient">Summary</span>
               </h2>
+              <div className="summary_box">
+                <p className="font-inter font-medium text-sm text-gray-700">
+                  {article.summary}
+                </p>
+              </div>
             </div>
           )
         )}
